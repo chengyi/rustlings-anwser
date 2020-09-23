@@ -11,8 +11,6 @@ struct Color {
     blue: u8,
 }
 
-// I AM NOT DONE
-
 // Your task is to complete this implementation
 // and return an Ok result of inner type Color.
 // You need create implementation for a tuple of three integer,
@@ -26,6 +24,15 @@ struct Color {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = String;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let valid_range = 0..=255;
+        let (r, g, b) = tuple;
+        if valid_range.contains(&r)
+            && valid_range.contains(&g)
+            && valid_range.contains(&b) {
+            return Ok(Color{red: r as u8, green: g as u8, blue: b as u8});
+        } else {
+            return Err(String::from("Invalid param"));
+        }
     }
 }
 
@@ -33,6 +40,18 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = String;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let r = arr[0];
+        let g = arr[1];
+        let b = arr[2];
+
+        let valid_range = 0..=255;
+        if valid_range.contains(&r)
+            && valid_range.contains(&g)
+            && valid_range.contains(&b) {
+            return Ok(Color{red: r as u8, green: g as u8, blue: b as u8});
+        } else {
+            return Err(String::from("Invalid param"));
+        }
     }
 }
 
@@ -40,6 +59,22 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = String;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(String::from("Invalid slice len"));
+        }
+
+        let r = slice[0];
+        let g = slice[1];
+        let b = slice[2];
+
+        let valid_range = 0..=255;
+        if valid_range.contains(&r)
+            && valid_range.contains(&g)
+            && valid_range.contains(&b) {
+            return Ok(Color{red: r as u8, green: g as u8, blue: b as u8});
+        } else {
+            return Err(String::from("Invalid param"));
+        }
     }
 }
 
